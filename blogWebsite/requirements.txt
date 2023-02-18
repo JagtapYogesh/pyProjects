@@ -1,0 +1,8 @@
+Flask-Bootstrap
+Flask-SQLAlchemy
+Flask-WTF
+Flask-CKEditor
+Flask-login
+Werkzeug~=2.2.2
+Flask~=2.2.2
+WTForms~=3.0.1

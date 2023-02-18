@@ -1,0 +1,85 @@
+{% include "header.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('{{post.img_url}}')">
+	<div class="overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				<div class="post-heading">
+					<h1>{{post.title}}</h1>
+					<h2 class="subheading">{{post.subtitle}}</h2>
+					<span class="meta">Posted by
+              <a href="#">{{post.author}}</a>
+              on {{post.date}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+
+            {{post.body|safe}}
+           <hr>
+            {% if user_type == "Reader": %}
+                <div class="comments">
+                <section style="background-color: #ad655f;">
+                  <div class="container my-5 py-5">
+                    <div class="row d-flex justify-content-center">
+                      <div class="col-md-12 col-lg-10">
+                        <div class="card text-dark">
+                          <div class="card-body p-4">
+                            <h4 class="mb-0">Recent comments</h4>
+                            <p class="fw-light mb-4 pb-2">Latest Comments section by users</p>
+
+                          {% for comment in comments %}
+                          <div class="card-body p-4">
+                            <div class="d-flex flex-start">
+                              <img class="rounded-circle shadow-1-strong me-3"
+                                src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg" alt="avatar" width="60"
+                                height="60" />
+                              <div>
+                                <h6 class="fw-bold mb-1">{{comment.username}}</h6>
+                                <div class="d-flex align-items-center mb-3">
+                                  <p class="mb-0">
+                                    {{comment.date}}
+                                  </p>
+                                </div>
+                                <p class="mb-0">
+                                    {{comment.comment|safe}}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <hr class="my-0" style="height: 1px;" />
+                          {% endfor %}
+
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+            </div>
+            {{ckeditor.load()}}
+            {{wtf.quick_form(form)}}
+            {% else %}
+                <div class="clearfix">
+                  <a class="btn btn-primary float-right" href="{{url_for('edit_post', post_id=post.id)}}">Edit Post</a>
+                  <a class="btn btn-danger float-left" href="{{url_for('delete_post', post_id=post.id)}}">Delete Post</a>
+               </div>
+           {% endif %}
+          </div>
+      </div>
+    </div>
+  </article>
+
+  <hr>
+{% include "footer.html" %}
